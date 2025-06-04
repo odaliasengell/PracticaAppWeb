@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Vista } from "./vista";
 
 @Entity()
 export class Usuario {
@@ -10,4 +11,7 @@ export class Usuario {
 
   @Column()
   correo!: string;
+
+  @OneToMany (()=>Vista, (Vista:Vista)=>Vista.Usuario)
+  vistas!: Vista[]
 }

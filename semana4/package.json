@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "dev": "tsnd --respawn --clear src/app.ts",
+  "build": "rimraf ./dist && tsc",
+  "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,6 @@
   "dependencies": {
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.23"
+    "typeorm": "^0.3.24"
   }
 }
