@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.29",
     "@types/sequelize": "^4.28.20",
@@ -26,6 +27,7 @@
     "color-convert": "^2.0.1",
     "color-name": "^1.1.4",
     "concat-map": "^0.0.1",
+    "cors": "^2.8.5",
     "create-require": "^1.1.1",
     "cross-spawn": "^7.0.6",
     "diff": "^4.0.2",
@@ -42,6 +44,7 @@
     "hasown": "^2.0.2",
     "inflight": "^1.0.6",
     "inherits": "^2.0.4",
+    "inversify": "^7.5.2",
     "is-binary-path": "^2.1.0",
     "is-core-module": "^2.16.1",
     "is-extglob": "^2.1.1",
@@ -65,6 +68,7 @@
     "path-scurry": "^2.0.0",
     "picomatch": "^2.3.1",
     "readdirp": "^3.6.0",
+    "reflect-metadata": "^0.2.2",
     "resolve": "^1.22.10",
     "sequelize": "^6.37.7",
     "shebang-command": "^2.0.0",

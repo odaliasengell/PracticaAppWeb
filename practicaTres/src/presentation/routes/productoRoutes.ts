@@ -1,9 +1,14 @@
+
+// src/presentation/routes/productoRoutes.ts
 import { Router } from 'express';
 import { ProductoController } from '../controllers/ProductoController';
-import { container } from '../../infrastructure/container/dependencyInjection';
+import { container, TYPES } from '../../infrastructure/container/dependencyInjection';
 
 const router = Router();
-const productoController = container.get<ProductoController>('ProductoController');
+
+// Obtener el controlador usando factory
+const controllerFactory = container.get<() => ProductoController>(TYPES.ProductoController);
+const productoController = controllerFactory();
 
 router.post('/', (req, res) => productoController.crear(req, res));
 router.get('/', (req, res) => productoController.listar(req, res));

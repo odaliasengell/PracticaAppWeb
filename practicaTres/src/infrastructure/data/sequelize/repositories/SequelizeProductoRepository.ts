@@ -1,55 +1,104 @@
+import { injectable } from 'inversify';
 import { IProductoRepository } from '../../../../domain/interfaces/IProductoRepository';
 import { Producto } from '../../../../domain/entities/Producto';
 import { ProductoModel } from '../models/ProductoModel';
 
+@injectable()
 export class SequelizeProductoRepository implements IProductoRepository {
   
   async findById(id: string): Promise<Producto | null> {
-    const model = await ProductoModel.findByPk(id);
-    return model ? this.toDomain(model) : null;
+    try {
+      const model = await ProductoModel.findByPk(id);
+      return model ? this.toDomain(model) : null;
+    } catch (error) {
+      console.error('Error finding product by id:', error);
+      throw error;
+    }
   }
 
   async findAll(): Promise<Producto[]> {
-    const models = await ProductoModel.findAll();
-    return models.map(model => this.toDomain(model));
+    try {
+      const models = await ProductoModel.findAll({
+        order: [['fechaCreacion', 'DESC']]
+      });
+      return models.map(model => this.toDomain(model));
+    } catch (error) {
+      console.error('Error finding all products:', error);
+      throw error;
+    }
   }
 
   async findByRestaurante(restauranteId: string): Promise<Producto[]> {
-    const models = await ProductoModel.findAll({ 
-      where: { restauranteId, activo: true } 
-    });
-    return models.map(model => this.toDomain(model));
+    try {
+      const models = await ProductoModel.findAll({ 
+        where: { restauranteId, activo: true },
+        order: [['fechaCreacion', 'DESC']]
+      });
+      return models.map(model => this.toDomain(model));
+    } catch (error) {
+      console.error('Error finding products by restaurant:', error);
+      throw error;
+    }
   }
 
   async findByCategoria(categoria: string): Promise<Producto[]> {
-    const models = await ProductoModel.findAll({ 
-      where: { categoria, activo: true } 
-    });
-    return models.map(model => this.toDomain(model));
+    try {
+      const models = await ProductoModel.findAll({ 
+        where: { categoria, activo: true },
+        order: [['fechaCreacion', 'DESC']]
+      });
+      return models.map(model => this.toDomain(model));
+    } catch (error) {
+      console.error('Error finding products by category:', error);
+      throw error;
+    }
   }
 
   async save(producto: Producto): Promise<Producto> {
-    const model = await ProductoModel.create(this.toModel(producto));
-    return this.toDomain(model);
+    try {
+      const model = await ProductoModel.create(this.toModel(producto));
+      return this.toDomain(model);
+    } catch (error) {
+      console.error('Error saving product:', error);
+      throw error;
+    }
   }
 
   async update(producto: Producto): Promise<Producto> {
-    await ProductoModel.update(this.toModel(producto), {
-      where: { id: producto.id }
-    });
-    const updated = await ProductoModel.findByPk(producto.id);
-    return this.toDomain(updated!);
+    try {
+      await ProductoModel.update(this.toModel(producto), {
+        where: { id: producto.id }
+      });
+      const updated = await ProductoModel.findByPk(producto.id);
+      if (!updated) {
+        throw new Error('Product not found after update');
+      }
+      return this.toDomain(updated);
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
+    }
   }
 
   async delete(id: string): Promise<void> {
-    await ProductoModel.destroy({ where: { id } });
+    try {
+      await ProductoModel.destroy({ where: { id } });
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      throw error;
+    }
   }
 
   async existsByNombre(nombre: string, restauranteId: string): Promise<boolean> {
-    const count = await ProductoModel.count({ 
-      where: { nombre, restauranteId } 
-    });
-    return count > 0;
+    try {
+      const count = await ProductoModel.count({ 
+        where: { nombre, restauranteId } 
+      });
+      return count > 0;
+    } catch (error) {
+      console.error('Error checking if product exists by name:', error);
+      throw error;
+    }
   }
 
   private toDomain(model: any): Producto {
