@@ -1,5 +1,5 @@
 export class Precio {
-  constructor(private valor: number) {
+  constructor(private readonly valor: number) {
     if (valor <= 0) {
       throw new Error('El precio debe ser mayor a 0');
     }

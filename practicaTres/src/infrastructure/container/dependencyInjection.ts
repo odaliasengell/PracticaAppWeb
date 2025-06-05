@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { Container } from 'inversify';
 import { IProductoRepository } from '../../domain/interfaces/IProductoRepository';
 import { ProductoService } from '../../application/services/ProductoService';
 import { ProductoController } from '../../presentation/controllers/ProductoController';
@@ -8,36 +7,48 @@ import { ProductoController } from '../../presentation/controllers/ProductoContr
 import { SequelizeProductoRepository } from '../data/sequelize/repositories/SequelizeProductoRepository';
 import { TypeORMProductoRepository } from '../data/typeorm/repositories/TypeORMProductoRepository';
 
-// Definir símbolos para la inyección de dependencias
-const TYPES = {
-  ProductoRepository: Symbol.for('ProductoRepository'),
-  ProductoService: Symbol.for('ProductoService'),
-  ProductoController: Symbol.for('ProductoController')
-};
-
-const container = new Container();
-
 // Configurar qué implementación usar según variable de entorno
-const ORM_TYPE = process.env.ORM_TYPE ?? 'typeorm'; // 'typeorm' o 'sequelize'
+const ORM_TYPE = process.env.ORM_TYPE ?? 'typeorm';
 
 console.log(`🔧 Configurando container con ORM: ${ORM_TYPE}`);
 
-if (ORM_TYPE === 'sequelize') {
-  container.bind<IProductoRepository>(TYPES.ProductoRepository).to(SequelizeProductoRepository);
-} else {
-  container.bind<IProductoRepository>(TYPES.ProductoRepository).to(TypeORMProductoRepository);
+// Factory simple sin inversify
+export class DIContainer {
+  private static _instance: DIContainer;
+  private _productoController: ProductoController | null = null;
+
+  public static getInstance(): DIContainer {
+    if (!DIContainer._instance) {
+      DIContainer._instance = new DIContainer();
+    }
+    return DIContainer._instance;
+  }
+
+  public getProductoController(): ProductoController {
+    if (!this._productoController) {
+      // Crear repository
+      let repository: IProductoRepository;
+      if (ORM_TYPE === 'sequelize') {
+        repository = new SequelizeProductoRepository();
+      } else {
+        repository = new TypeORMProductoRepository();
+      }
+
+      // Crear service
+      const service = new ProductoService(repository);
+
+      // Crear controller
+      this._productoController = new ProductoController(service);
+    }
+
+    return this._productoController;
+  }
 }
 
-// Bind de servicios usando toDynamicValue
-container.bind<ProductoService>(TYPES.ProductoService).toDynamicValue(() => {
-  const repository = container.get<IProductoRepository>(TYPES.ProductoRepository);
-  return new ProductoService(repository);
-});
-
-// Bind de controladores usando toDynamicValue
-container.bind<ProductoController>(TYPES.ProductoController).toDynamicValue(() => {
-  const service = container.get<ProductoService>(TYPES.ProductoService);
-  return new ProductoController(service);
-});
-
-export { container, TYPES };
+// Export legacy para compatibilidad
+export const container = DIContainer.getInstance();
+export const TYPES = {
+  ProductoRepository: 'ProductoRepository',
+  ProductoService: 'ProductoService',
+  ProductoController: 'ProductoController'
+};

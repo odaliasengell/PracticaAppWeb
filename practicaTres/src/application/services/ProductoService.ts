@@ -4,11 +4,11 @@ import { ActualizarProductoUseCase } from '../use-cases/ActualizarProductoUseCas
 import { ObtenerProductoUseCase } from '../use-cases/ObtenerProductoUseCase';
 
 export class ProductoService {
-  private crearProductoUseCase: CrearProductoUseCase;
-  private actualizarProductoUseCase: ActualizarProductoUseCase;
-  private obtenerProductoUseCase: ObtenerProductoUseCase;
+  private readonly crearProductoUseCase: CrearProductoUseCase;
+  private readonly actualizarProductoUseCase: ActualizarProductoUseCase;
+  private readonly obtenerProductoUseCase: ObtenerProductoUseCase;
 
-  constructor(private productoRepository: IProductoRepository) {
+  constructor(private readonly productoRepository: IProductoRepository) {
     this.crearProductoUseCase = new CrearProductoUseCase(productoRepository);
     this.actualizarProductoUseCase = new ActualizarProductoUseCase(productoRepository);
     this.obtenerProductoUseCase = new ObtenerProductoUseCase(productoRepository);

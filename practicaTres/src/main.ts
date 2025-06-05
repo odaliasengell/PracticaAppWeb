@@ -4,7 +4,6 @@ import cors from 'cors';
 import { productoRoutes } from './presentation/routes/productoRoutes';
 import { initializeDatabase as initTypeORM } from './infrastructure/data/typeorm/data-source/AppDataSource';
 import { testConnection as testSequelize, syncModels } from './infrastructure/database/sequelize-config';
-import 'dotenv/config';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;

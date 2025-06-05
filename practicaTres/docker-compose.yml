@@ -1,0 +1,38 @@
+
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15
+    container_name: restaurante-postgres
+    environment:
+      POSTGRES_DB: restaurante_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - restaurante-network
+
+  # PgAdmin para administrar la BD
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: restaurante-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    networks:
+      - restaurante-network
+
+volumes:
+  postgres_data:
+
+networks:
+  restaurante-network:
+    driver: bridge
