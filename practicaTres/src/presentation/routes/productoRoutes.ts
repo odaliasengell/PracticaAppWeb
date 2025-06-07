@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { ProductoController } from '../controllers/ProductoController';
 import { ProductoService } from '../../application/services/ProductoService';
 import { TypeORMProductoRepository } from '../../infrastructure/data/typeorm/repositories/TypeORMProductoRepository';
@@ -15,10 +15,21 @@ const repository = ORM_TYPE === 'sequelize'
 const productoService = new ProductoService(repository);
 const productoController = new ProductoController(productoService);
 
-// Definir las rutas
-router.post('/', (req, res) => productoController.crear(req, res));
-router.get('/', (req, res) => productoController.listar(req, res));
-router.get('/:id', (req, res) => productoController.obtener(req, res));
-router.put('/:id', (req, res) => productoController.actualizar(req, res));
+// Rutas usando funciones nombradas para evitar problemas con arrow functions
+router.post('/', function createProducto(req: Request, res: Response) {
+  productoController.crear(req, res);
+});
+
+router.get('/', function listProductos(req: Request, res: Response) {
+  productoController.listar(req, res);
+});
+
+router.get('/producto/:id', function getProducto(req: Request, res: Response) {
+  productoController.obtener(req, res);
+});
+
+router.put('/producto/:id', function updateProducto(req: Request, res: Response) {
+  productoController.actualizar(req, res);
+});
 
 export { router as productoRoutes };
