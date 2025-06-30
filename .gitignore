@@ -4,6 +4,10 @@ node_modules/
 # Archivos de entorno
 .env
 
+# Archivos de base de datos SQLite (local)
+*.sqlite
+*.sqlite-journal
+
 # Logs
 *.log
 
@@ -11,7 +15,6 @@ node_modules/
 dist/
 build/
 
-# Sistema
+# Archivos temporales del sistema
 .DS_Store
 Thumbs.db
-
