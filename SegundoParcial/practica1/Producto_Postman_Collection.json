@@ -1,0 +1,118 @@
+{
+  "info": {
+    "name": "API Producto - NestJS",
+    "_postman_id": "producto-api-nestjs",
+    "description": "Colecci\u00f3n para probar la API REST de Producto.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Producto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Camiseta azul\",\n  \"precio\": 19.99,\n  \"descripcion\": \"Talla M, algod\\u00f3n\",\n  \"stock\": 10\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/producto",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "producto"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Listar Productos",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/producto",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "producto"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Obtener Producto por ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/producto/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "producto",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Actualizar Producto",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"stock\": 15\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/producto/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "producto",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Eliminar Producto",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:3000/producto/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "producto",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
