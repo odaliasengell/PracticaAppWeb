@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Turista {
+  id: ID!
+  nombre: String!
+  email: String!
+}
+
+type Query {
+  turistas: [Turista!]!
+  turista(id: String!): Turista!
+}
+
+type Mutation {
+  createTurista(createTuristaInput: CreateTuristaInput!): Turista!
+  updateTurista(updateTuristaInput: UpdateTuristaInput!): Turista!
+  removeTurista(id: String!): Turista!
+}
+
+input CreateTuristaInput {
+  nombre: String!
+  email: String!
+}
+
+input UpdateTuristaInput {
+  nombre: String
+  email: String
+  id: ID!
+}
