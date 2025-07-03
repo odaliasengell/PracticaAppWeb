@@ -1,0 +1,99 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Usuario {
+  id: Int!
+  nombre: String!
+  email: String!
+  password: String!
+  activo: Boolean!
+  pedidos: [Pedido!]
+}
+
+type Pedido {
+  id: Int!
+  usuario: Usuario!
+  producto: Producto!
+  cantidad: Int!
+  total: Float!
+  fecha_pedido: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Producto {
+  id: Int!
+  nombre: String!
+  descripcion: String
+  precio: Float!
+  stock: Int!
+  pedidos: [Pedido!]
+}
+
+type Query {
+  productos: [Producto!]!
+  producto(id: Int!): Producto!
+  usuarios: [Usuario!]!
+  usuario(id: Int!): Usuario!
+  pedidos: [Pedido!]!
+  pedido(id: Int!): Pedido!
+}
+
+type Mutation {
+  createProducto(createProductoInput: CreateProductoInput!): Producto!
+  updateProducto(id: Int!, updateProductoInput: UpdateProductoInput!): Producto!
+  removeProducto(id: Int!): Boolean!
+  createUsuario(createUsuarioInput: CreateUsuarioInput!): Usuario!
+  updateUsuario(id: Int!, updateUsuarioInput: UpdateUsuarioInput!): Usuario!
+  removeUsuario(id: Int!): Boolean!
+  createPedido(createPedidoInput: CreatePedidoInput!): Pedido!
+  updatePedido(id: Int!, updatePedidoInput: UpdatePedidoInput!): Pedido!
+  removePedido(id: Int!): Boolean!
+}
+
+input CreateProductoInput {
+  nombre: String!
+  descripcion: String
+  precio: Float!
+  stock: Int!
+}
+
+input UpdateProductoInput {
+  nombre: String
+  descripcion: String
+  precio: Float
+  stock: Int
+}
+
+input CreateUsuarioInput {
+  nombre: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUsuarioInput {
+  nombre: String
+  email: String
+  password: String
+  activo: Boolean
+}
+
+input CreatePedidoInput {
+  usuario_id: Int!
+  producto_id: Int!
+  cantidad: Int!
+  total: Float!
+  fecha_pedido: String!
+}
+
+input UpdatePedidoInput {
+  usuario_id: Int
+  producto_id: Int
+  cantidad: Int
+  total: Float
+  fecha_pedido: String
+}
