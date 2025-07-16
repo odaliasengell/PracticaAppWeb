@@ -1,0 +1,70 @@
+{
+  "info": {
+    "name": "Pr\u00e1ctica 3 - WebSocket CRUD",
+    "_postman_id": "8b7298b5-2787-4bba-a7cf-9c4d313e03d1",
+    "description": "Colecci\u00f3n de eventos WebSocket para Producto, Repartidor y RutaEntrega",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Producto - Crear",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "ws://localhost:3000",
+          "protocol": "ws",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event\": \"createProducto\", \"data\": {\"nombre\": \"Galleta\", \"precio\": 1.25, \"disponible\": true}}"
+        }
+      }
+    },
+    {
+      "name": "Repartidor - Crear",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "ws://localhost:3000",
+          "protocol": "ws",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event\": \"createRepartidor\", \"data\": {\"nombre\": \"Carlos\", \"correo\": \"carlos@email.com\", \"telefono\": \"0999999999\"}}"
+        }
+      }
+    },
+    {
+      "name": "RutaEntrega - Crear",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "ws://localhost:3000",
+          "protocol": "ws",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event\": \"createRutaEntrega\", \"data\": {\"origen\": \"Terminal\", \"destino\": \"Mercado\", \"distanciaKm\": 2.5}}"
+        }
+      }
+    }
+  ]
+}
